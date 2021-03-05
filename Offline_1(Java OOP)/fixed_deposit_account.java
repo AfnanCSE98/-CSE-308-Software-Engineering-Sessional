@@ -3,12 +3,14 @@
 public class fixed_deposit_account extends account {
 
     private int loan;
-    private int loan_upper_bound;
+    final private int loan_upper_bound = 100000;
     private double interest_rate;
     private boolean took_loan;
+    final private double loan_interest_rate = 0.1;
     private boolean withdrawal_status;
     private boolean deposited_status;
     final private int min_initial_dep = 100000;
+    private int year;
 
     @Override
     public String create_account(String nm , int initial_dep){
@@ -20,14 +22,18 @@ public class fixed_deposit_account extends account {
             balance = initial_dep;
             year = 0;
             loan = 0;
+            year = 0;
             interest_rate = 0.05;
             took_loan = false;
             withdrawal_status = false;
-            loan_upper_bound = 1000;
 
-        return "student account for " + nm + " created.Initial balance is " + String.valueOf(initial_dep);
+        return "Fixed deposit account for " + nm + " created.Initial balance is " + String.valueOf(balance);
     
         }
+    }
+
+    public void change_interest_rate(double rate){
+        interest_rate = rate;
     }
 
     @Override
@@ -43,10 +49,13 @@ public class fixed_deposit_account extends account {
         return deposited_status;
     }
 
-    /*
+    public int get_year(){
+        return year;
+    }
+    
     @Override
     public void withdraw(int amount){
-        if(amount > 10000 || amount>balance){
+        if(year==0 || amount>balance){
             withdrawal_status = false;
         }
         else{
@@ -78,8 +87,17 @@ public class fixed_deposit_account extends account {
             took_loan = true;
         }else took_loan = false;
         
+    }    
+
+    public void loan_approved(int amount){
+        loan += amount;
+        balance += loan;
     }
 
-*/    
+    public void year_inc(){
+        year++;
+        balance += (balance*interest_rate);
+        balance -= (loan*loan_interest_rate);
+    }
 
 }

@@ -4,9 +4,11 @@ public class savings_account extends account {
 
     private int loan;
     final private int loan_upper_bound = 10000;
-    final private double interest_rate = 0.1;
+    private double interest_rate = 0.1;
+    final private double loan_interest_rate = 0.1;
     private boolean took_loan;
     private boolean withdrawal_status;
+    private int year;
 
     @Override
     public String create_account(String nm , int initial_dep){
@@ -14,6 +16,7 @@ public class savings_account extends account {
         balance = initial_dep;
         year = 0;
         loan = 0; 
+        year = 0;
         took_loan = false;
         withdrawal_status = false;
 
@@ -23,6 +26,14 @@ public class savings_account extends account {
     @Override
     public void deposit(int amount){
         balance += amount;
+    }
+
+    public void change_interest_rate(double rate){
+        interest_rate = rate;
+    }
+
+    public int get_year(){
+        return year;
     }
 
     @Override
@@ -62,5 +73,15 @@ public class savings_account extends account {
        
     }
 
+    public void loan_approved(int amount){
+        loan+=amount;
+        balance += loan;
+    }
+
+    public void year_inc(){
+        year++;
+        balance += (balance*interest_rate);
+        balance -= (loan*loan_interest_rate);
+    }
    
 }
