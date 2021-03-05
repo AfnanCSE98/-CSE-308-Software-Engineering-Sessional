@@ -1,5 +1,13 @@
-//package pkg1;
+import javax.swing.event.PopupMenuListener;
 
 public abstract class employee {
-    abstract String lookup_user();
+    private String name;
+
+    public String getname(){
+        return name;
+    }
+    public void setname(String nm){
+        name = nm; 
+    }
+    
 }

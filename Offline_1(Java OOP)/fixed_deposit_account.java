@@ -7,6 +7,7 @@ public class fixed_deposit_account extends account {
     private double interest_rate;
     private boolean took_loan;
     final private double loan_interest_rate = 0.1;
+    private int requested_loan;  ///holds the total valid loan amount
     private boolean withdrawal_status;
     private boolean deposited_status;
     final private int min_initial_dep = 100000;
@@ -22,6 +23,7 @@ public class fixed_deposit_account extends account {
             balance = initial_dep;
             year = 0;
             loan = 0;
+            requested_loan = 0;
             year = 0;
             interest_rate = 0.05;
             took_loan = false;
@@ -85,19 +87,31 @@ public class fixed_deposit_account extends account {
     public void request_loan(int amount){
         if(amount<=loan_upper_bound){                //need to check if bank has that much initial fund also
             took_loan = true;
+            requested_loan += amount;
         }else took_loan = false;
         
     }    
 
-    public void loan_approved(int amount){
-        loan += amount;
+    public String loan_approved(){
+        loan += requested_loan;
         balance += loan;
+
+        requested_loan = 0;
+        
+        if(loan_pending()){
+            return name+" ";
+        }else return "";
+    }
+
+    public boolean loan_pending(){
+        return requested_loan>0;
     }
 
     public void year_inc(){
         year++;
         balance += (balance*interest_rate);
         balance -= (loan*loan_interest_rate);
+        balance -= 500;
     }
 
 }

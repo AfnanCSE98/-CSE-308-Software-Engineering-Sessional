@@ -102,7 +102,69 @@ public class Main {
                 }
                 else System.out.println("Loan request failed!");
             }
+            ///INC
+            else if(str[0].equalsIgnoreCase("INC")){
+                b.inc_year();
+            }
+            ///Open 
+            else if(str[0].equalsIgnoreCase("Open")){
+                ///if employee
+                   ///handle here
+                current_user = str[1];
+                System.out.println("Welcome back, " + current_user);
+            }
+            ///Lookup by employee
+            else if(str[0].equalsIgnoreCase("Lookup")){
+                if(!b.if_employee(current_user)){
+                    System.out.println("Invalid Command");    
+                }else{
+                    String username = str[1];
+                    System.out.println(username + "'s current balance " + String.valueOf(b.get_balance(username)));
+                }
+            }
+            ///Approve loan by MD or officer
+            else if(str[0].equalsIgnoreCase("Approve") && str[1].equalsIgnoreCase("Loan")){
+                if(!b.is_MD_or_officer(current_user)){
+                    System.out.println("Invalid Command.Either MD or officer is allowed to do it.");    
+                }else{
+                    String msg = b.approve_loan();
+                    System.out.println("Loans approved for "+msg);
+                }
+            }
+            ///change interest rate
+            else if(str[0].equalsIgnoreCase("Change")){
+                if(!b.isMD(current_user)){
+                    System.out.println("Invalid Command.Only A MD can do it");    
+                }else{
+                    int new_rate = Integer.parseInt(str[2]);
+                    if(str[1].equalsIgnoreCase("Student")){
+                        b.change_students_interest_rate(new_rate);
+                    }
+                    else if(str[1].equalsIgnoreCase("Savings")){
+                        b.change_savings_interest_rate(new_rate);
+                    }
+                    else if(str[1].equalsIgnoreCase("Fixed_deposit")){
+                        b.change_fixed_deposit_interest_rate(new_rate);
+                    }
+                }
+            }
+            ///see internal fund
+            ///Give command as "Internal Fund"
+            else if(str[0].equalsIgnoreCase("Internal")){
+                if(!b.isMD(current_user)){
+                    System.out.println("Invalid Command.Only A MD can do it");    
+                }else{
+                    System.out.println("Internal fund : " + String.valueOf(b.get_internal_fund()));
+                }
+            }
 
+            else if(str[0].equalsIgnoreCase("Open")){
+                current_user = str[1];
+                if(b.is_MD_or_officer(current_user)){
+                    System.out.println(current_user+" active, there are loan approvals pending");
+                }
+                else System.out.println("Welcome back, " + current_user);
+            }
             
             else{
                 System.out.println("Give proper input");
