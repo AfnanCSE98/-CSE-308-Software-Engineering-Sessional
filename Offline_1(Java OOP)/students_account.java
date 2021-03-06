@@ -78,7 +78,7 @@ public class students_account extends account {
     public String loan_approved(){ ///returns name if loan was pending
         
         loan += requested_loan;
-        balance += loan;
+        balance +=requested_loan;
         String msg="";
         if(loan_pending()){
             msg = name+" ";

@@ -79,7 +79,7 @@ public class savings_account extends account {
 
     public String loan_approved(){
         loan += requested_loan;
-        balance += loan;
+        balance +=requested_loan;
         String msg="";
         if(loan_pending()){
             msg = name+" ";
