@@ -4,14 +4,14 @@ public class fixed_deposit_account extends account {
 
     private int loan;
     final private int loan_upper_bound = 100000;
-    private double interest_rate;
+    public int year;
+    public double interest_rate;
     private boolean took_loan;
     final private double loan_interest_rate = 0.1;
     private int requested_loan;  ///holds the total valid loan amount
     private boolean withdrawal_status;
     private boolean deposited_status;
     final private int min_initial_dep = 100000;
-    private int year;
 
     @Override
     public String create_account(String nm , int initial_dep){
@@ -23,9 +23,8 @@ public class fixed_deposit_account extends account {
             balance = initial_dep;
             year = 0;
             loan = 0;
+            interest_rate =0.15;
             requested_loan = 0;
-            year = 0;
-            interest_rate = 0.05;
             took_loan = false;
             withdrawal_status = false;
 
@@ -36,6 +35,10 @@ public class fixed_deposit_account extends account {
 
     public void change_interest_rate(double rate){
         interest_rate = rate;
+    }
+
+    public int get_year(){
+        return year;
     }
 
     @Override
@@ -51,9 +54,7 @@ public class fixed_deposit_account extends account {
         return deposited_status;
     }
 
-    public int get_year(){
-        return year;
-    }
+    
     
     @Override
     public void withdraw(int amount){
@@ -95,12 +96,14 @@ public class fixed_deposit_account extends account {
     public String loan_approved(){
         loan += requested_loan;
         balance += loan;
-
-        requested_loan = 0;
-        
+        String msg="";
         if(loan_pending()){
-            return name+" ";
-        }else return "";
+            msg = name+" ";
+        } else {
+            msg = "";
+        }
+        requested_loan = 0;
+        return msg;
     }
 
     public boolean loan_pending(){

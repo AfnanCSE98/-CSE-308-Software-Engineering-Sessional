@@ -14,42 +14,48 @@ public class Main {
             String[] str = s.trim().split("\\s+");
             ///create account command
             if(str[0].equalsIgnoreCase("Create")){
-                String name = str[1];
-                int initial_dep = Integer.parseInt(str[3]);
-                ///checking ac type
-                if(str[2].equalsIgnoreCase("Student")){
-                    students_account ob = new students_account();
-                    String msg = ob.create_account(name, initial_dep);
-                    b.add_students_acc(ob);
-                    current_user = name;
-                    System.out.println(msg);
+                if(!b.is_valid_name(str[1])){
+                    System.out.println("This name already exists!Account creation failed");
                 }
-
-                else if(str[2].equalsIgnoreCase("Savings")){
-                    savings_account ob = new savings_account();
-                    String msg = ob.create_account(name, initial_dep);
-                    b.add_savings_acc(ob);
-                    current_user = name;
-                    System.out.println(msg);
-                }
-
-                else if(str[2].equalsIgnoreCase("fixed_deposit")){
-                    fixed_deposit_account ob = new fixed_deposit_account();
-                    String msg = ob.create_account(name, initial_dep);
-                    if(msg.split("\\s+")[0].equalsIgnoreCase("Fixed")){ ///Acc created
-                        b.add_fixed_deposit_acc(ob);
+                else{
+                    String name = str[1];
+                    int initial_dep = Integer.parseInt(str[3]);
+                    ///checking ac type
+                    if(str[2].equalsIgnoreCase("Student")){
+                        students_account ob = new students_account();       
+                        String msg = ob.create_account(name, initial_dep);          
+                        b.add_students_acc(ob);
                         current_user = name;
                         System.out.println(msg);
                     }
-                    else{
-                        System.out.println(msg);  ///Acc not created
+
+                    else if(str[2].equalsIgnoreCase("Savings")){
+                        savings_account ob = new savings_account();
+                        String msg = ob.create_account(name, initial_dep);
+                        b.add_savings_acc(ob);
+                        current_user = name;
+                        System.out.println(msg);
+                    }
+
+                    else if(str[2].equalsIgnoreCase("fixed_deposit")){
+                        fixed_deposit_account ob = new fixed_deposit_account();
+                        String msg = ob.create_account(name, initial_dep);
+                        if(msg.split("\\s+")[0].equalsIgnoreCase("Fixed")){ ///Acc created
+                            b.add_fixed_deposit_acc(ob);
+                            current_user = name;
+                            System.out.println(msg);
+                        }
+                        else{
+                            System.out.println(msg);  ///Acc not created
+                        }
                     }
                 }
+                
             }
             ///deposit
             
             else if(str[0].equalsIgnoreCase("Deposit")){
-                int amount = Integer.parseInt(str[1]);
+                int amount = Integer.parseInt(str[1].replaceAll(",",""));
                 boolean is_deposited = b.deposit(current_user, amount);
                 int curr_balance = b.get_balance(current_user);
                 int curr_loan = b.get_loan(current_user);
@@ -105,14 +111,9 @@ public class Main {
             ///INC
             else if(str[0].equalsIgnoreCase("INC")){
                 b.inc_year();
+                System.out.println("1 year passed");
             }
-            ///Open 
-            else if(str[0].equalsIgnoreCase("Open")){
-                ///if employee
-                   ///handle here
-                current_user = str[1];
-                System.out.println("Welcome back, " + current_user);
-            }
+           
             ///Lookup by employee
             else if(str[0].equalsIgnoreCase("Lookup")){
                 if(!b.if_employee(current_user)){
@@ -136,15 +137,18 @@ public class Main {
                 if(!b.isMD(current_user)){
                     System.out.println("Invalid Command.Only A MD can do it");    
                 }else{
-                    int new_rate = Integer.parseInt(str[2]);
+                    double new_rate = Double.parseDouble(str[2]);
                     if(str[1].equalsIgnoreCase("Student")){
                         b.change_students_interest_rate(new_rate);
+                        System.out.println("Students interest rate changed to " + str[2]);
                     }
                     else if(str[1].equalsIgnoreCase("Savings")){
                         b.change_savings_interest_rate(new_rate);
+                        System.out.println("Savings interest rate changed to " + str[2]);
                     }
                     else if(str[1].equalsIgnoreCase("Fixed_deposit")){
                         b.change_fixed_deposit_interest_rate(new_rate);
+                        System.out.println("Fixed_deposit interest rate changed to " + str[2]);
                     }
                 }
             }
@@ -154,14 +158,15 @@ public class Main {
                 if(!b.isMD(current_user)){
                     System.out.println("Invalid Command.Only A MD can do it");    
                 }else{
-                    System.out.println("Internal fund : " + String.valueOf(b.get_internal_fund()));
+                    System.out.println("Internal fund : " + String.valueOf(b.see_internal_fund()));
                 }
             }
-
+            ///Open
             else if(str[0].equalsIgnoreCase("Open")){
                 current_user = str[1];
                 if(b.is_MD_or_officer(current_user)){
-                    System.out.println(current_user+" active, there are loan approvals pending");
+                    if(b.is_there_any_loan())System.out.println(current_user+" active, there are loan approvals pending");
+                    else System.out.println(current_user+" active");
                 }
                 else System.out.println("Welcome back, " + current_user);
             }

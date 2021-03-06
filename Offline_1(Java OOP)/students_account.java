@@ -2,40 +2,40 @@
 
 public class students_account extends account {
 
-    private int loan;
+    private int loan;    ///holds approved loan
+    public int year;
+    public double interest_rate;
     final private int loan_upper_bound = 1000;
-    private double interest_rate = 0.05;
     final private double loan_interest_rate = 0.1;
     private boolean took_loan;
-    private int requested_loan;  ///holds the total valid loan amount
+    private int requested_loan;  ///holds the total valid loan amount asked for
     private boolean withdrawal_status;
-    private int year;
 
     @Override
     public String create_account(String nm , int initial_dep){
         name = nm;                      ///if same name exists,show error msg from main.java
         balance = initial_dep;
-        year = 0;
         loan = 0;
         requested_loan = 0;
         year=0;
+        interest_rate = 0.05;
         took_loan = false;
         withdrawal_status = false;
 
         return "student account for " + nm + " created.Initial balance is " + String.valueOf(initial_dep);
-    }
+    } 
 
     public void change_interest_rate(double rate){
         interest_rate = rate;
     }
 
+    public int get_year(){
+        return year;
+    }
+
     @Override
     public void deposit(int amount){
         balance += amount;
-    }
-
-    public int get_year(){
-        return year;
     }
 
     @Override
@@ -79,12 +79,14 @@ public class students_account extends account {
         
         loan += requested_loan;
         balance += loan;
-
-        requested_loan = 0;
-        
+        String msg="";
         if(loan_pending()){
-            return name+" ";
-        }else return "";
+            msg = name+" ";
+        } else {
+            msg = "";
+        }
+        requested_loan = 0;
+        return msg;
     }
 
     public boolean loan_pending(){

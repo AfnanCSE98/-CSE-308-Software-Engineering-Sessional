@@ -1,6 +1,4 @@
-//package pkg1;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 
 public class bank {
@@ -36,6 +34,24 @@ public class bank {
         System.out.println(" Created");
     }
 
+    public boolean is_valid_name(String nm ){
+        for(students_account sa : list_st){
+            if(sa.name.equalsIgnoreCase(nm)){
+                return false;
+            }
+        }
+        for(savings_account sv : list_sav){
+            if(sv.name.equalsIgnoreCase(nm)){
+                return false;
+            }
+        }
+        for(fixed_deposit_account sfd : list_fd){
+            if(sfd.name.equalsIgnoreCase(nm)){
+                return false;
+            }
+        }
+        return true;
+    }
     public void inc_year(){
         for(students_account sa : list_st){
             sa.year_inc();
@@ -52,6 +68,9 @@ public class bank {
         return internal_fund;
     }
 
+    public int see_internal_fund(){
+        return md.see_internal_fund(this);
+    }
     public void add_savings_acc(savings_account ob){
         list_sav.add(ob);
     }
@@ -63,26 +82,7 @@ public class bank {
     public void add_fixed_deposit_acc(fixed_deposit_account ob){
         list_fd.add(ob);
     }
-/*
-    public account find_acc(String nm){
-        for(students_account ob : list_st){
-            if(ob.name.equalsIgnoreCase(nm)){
-                return ob;
-            }
-        }
-        for(savings_account ob : list_sav){
-            if(ob.name.equalsIgnoreCase(nm)){
-                return ob;
-            }
-        }
-        for(fixed_deposit_account ob : list_fd){
-            if(ob.name.equalsIgnoreCase(nm)){
-                return ob;
-            }
-        }
-        return null;
-    }
-*/
+
 
     public boolean deposit(String nm , int amount){
         for(students_account sa : list_st){
@@ -211,41 +211,50 @@ public class bank {
         return nm.equalsIgnoreCase("MD") || nm.equalsIgnoreCase("O1") || nm.equalsIgnoreCase("O2");
     }
 
-    public String approve_loan(){       ///returns the names of ppl whose loans were approved
-        String users_whose_loan_approved="";
-        String msg;
-        for(students_account sa : list_st){
-           msg = sa.loan_approved();
-           users_whose_loan_approved += msg;
-        }
-        for(savings_account sv : list_sav){
-            msg = sv.loan_approved();
-            users_whose_loan_approved += msg;
-        }
-        for(fixed_deposit_account sfd : list_fd){
-            msg = sfd.loan_approved();
-            users_whose_loan_approved += msg;
-        }
-        return users_whose_loan_approved;
+    public String approve_loan(){       ///will be called by MD/Officer
+        return md.approve_loan(this);
     }
 
+    public boolean is_there_any_loan(){
+        for(students_account sa : list_st){
+            if(sa.loan_pending()){
+                return true;
+            }
+        }
+        for(savings_account sv : list_sav){
+            if(sv.loan_pending()){
+                return true;
+            }
+        }
+        for(fixed_deposit_account sfd : list_fd){
+            if(sfd.loan_pending()){
+                return true;
+            }
+        }
+        return false;
+    }
     ///following 3 are done by MD only
     public void change_students_interest_rate(double new_rate){
-        for(students_account sa : list_st){
-            sa.change_interest_rate(new_rate);
-         }
+        md.change_students_interest_rate(this, new_rate);
     }
 
     public void change_savings_interest_rate(double new_rate){
-        for(savings_account sv : list_sav){
-            sv.change_interest_rate(new_rate);
-         }
+        md.change_savings_interest_rate(this, new_rate);
     }
 
     public void change_fixed_deposit_interest_rate(double new_rate){
-        for(fixed_deposit_account sfd : list_fd){
-            sfd.change_interest_rate(new_rate);
-         }
+        md.change_fd_interest_rate(this, new_rate);
+    }
+
+    ///list_getters
+    public ArrayList<students_account> get_students(){
+        return list_st;
+    }
+    public ArrayList<savings_account> get_savings(){
+        return list_sav;
+    }
+    public ArrayList<fixed_deposit_account> get_fixed_deposit(){
+        return list_fd;
     }
 
 
