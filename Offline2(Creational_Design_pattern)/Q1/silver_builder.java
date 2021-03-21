@@ -52,15 +52,15 @@ public class silver_builder implements builder{
         }
     }
 
-    public void set_framework(String framework){
+   public void set_framework(String framework){
         if(framework.equalsIgnoreCase("django")){
-            server = new django();
+            server = django_creator.create_server();
         }
         else if(framework.equalsIgnoreCase("spring")){
-            server = new spring();
+            server = spring_creator.create_server();
         }
         else if(framework.equalsIgnoreCase("laravel")){
-            server = new laravel();
+            server = laravel_creator.create_server();
         }
     }
 }
