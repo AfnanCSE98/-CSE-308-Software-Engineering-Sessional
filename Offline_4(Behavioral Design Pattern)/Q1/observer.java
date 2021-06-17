@@ -1,3 +1,5 @@
 public interface observer{
-  public void update(int stock_cnt , double stock_price);
+  public void update(String name , int cnt);
+  public void update(String name , double price);
+  public void set_server (server my_server);
 }
