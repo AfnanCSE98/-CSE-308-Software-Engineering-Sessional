@@ -15,11 +15,15 @@ public class stock implements subject{
 
   public void registerUser(observer ob){
     users.add(ob);
-    System.out.println(users.size());
   }
 
-  public void removeUser(observer ob){
-    users.remove(ob);
+  public void removeUser(server s_ob){
+    for(observer o:users){
+      if(o.get_server_obj()==s_ob){
+        users.remove(o);
+        break;
+      }
+    }
   }
 
   public void notify_of_price(double new_price){
@@ -29,8 +33,6 @@ public class stock implements subject{
   }
 
   public void notify_of_cnt(int new_cnt){
-    //System.out.print("new cnt ");
-    //System.out.println(users.size());
     for(observer ob : users){
       ob.update(name , new_cnt);
     }
@@ -41,9 +43,14 @@ public class stock implements subject{
     notify_of_cnt(cnt);
   }
 
-  public void set_price(double price){
-    this.price = price;
-    notify_of_price(price);
+  public void increase_price(double price){
+    this.price += price;
+    notify_of_price(this.price);
+  }
+
+  public void decrease_price(double price){
+    this.price -= price;
+    notify_of_price(this.price);
   }
 
   public String get_name(){
@@ -52,5 +59,9 @@ public class stock implements subject{
 
   public int get_subscribers_cnt(){
     return users.size();
+  }
+
+  public List<observer> get_user_list(){
+    return users;
   }
 }
