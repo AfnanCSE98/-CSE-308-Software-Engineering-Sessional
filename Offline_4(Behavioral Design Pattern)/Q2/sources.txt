@@ -1,5 +1,8 @@
+./jpdc.java
+./jrta.java
+./jtrc.java
+./jwsa.java
 ./main.java
 ./mediator.java
 ./mediator_org.java
 ./org.java
-./public_service_org.java

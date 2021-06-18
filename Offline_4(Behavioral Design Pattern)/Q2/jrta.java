@@ -1,14 +1,13 @@
 import java.util.*;
 import java.io.*;
 
-public class public_service_org implements org{
-  private String org_name;
+public class jrta implements org{
+  private final String org_name = "JRTA";
   private String org_service;
   private mediator_org m_org;
 
-  public public_service_org(String org_name , String org_service)
+  public jrta(String org_service)
   {
-    this.org_name = org_name;
     this.org_service = org_service;
   }
 
