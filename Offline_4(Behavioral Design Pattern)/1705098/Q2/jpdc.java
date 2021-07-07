@@ -1,12 +1,12 @@
 import java.util.*;
 import java.io.*;
 
-public class jtrc implements org{
-  private final String org_name = "JTRC";
+public class jpdc implements org{
+  private final String org_name = "JPDC";
   private String org_service;
   private mediator_org m_org;
 
-  public jtrc(String org_service)
+  public jpdc(String org_service)
   {
     this.org_service = org_service;
   }

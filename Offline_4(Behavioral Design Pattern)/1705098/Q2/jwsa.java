@@ -1,12 +1,12 @@
 import java.util.*;
 import java.io.*;
 
-public class jtrc implements org{
-  private final String org_name = "JTRC";
+public class jwsa implements org{
+  private final String org_name = "JWSA";
   private String org_service;
   private mediator_org m_org;
 
-  public jtrc(String org_service)
+  public jwsa(String org_service)
   {
     this.org_service = org_service;
   }
