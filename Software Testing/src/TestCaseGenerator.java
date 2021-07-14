@@ -70,7 +70,26 @@ public class TestCaseGenerator {
         return ara;
     }
 
+    //extra test cases
+    public int[] negative_numbers_list(){
+        int sz = ara_size;
+        int ara[] = new int[sz];
+        for(int i=0;i<sz;i++){
+            ara[i] = random.nextInt(bound)*(-1);
+        }
+        //System.out.println(Arrays.toString(ara));
+        return ara;
+    }
 
+    public int[] pos_neg_list(){
+        int sz = ara_size;
+        int ara[] = new int[sz];
+        for(int i=0;i<sz;i++){
+            ara[i] =random .nextBoolean() ? random.nextInt(bound)*(-1) : random.nextInt(bound) ;
+        }
+        //System.out.println(Arrays.toString(ara));
+        return ara;
+    }
 
 
 }

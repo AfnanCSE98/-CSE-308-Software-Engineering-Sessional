@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.DisplayName;
 class BubbleSortTest {
 
     BubbleSort b = new BubbleSort();
@@ -42,31 +42,38 @@ class BubbleSortTest {
         else return false;
     }
     @org.junit.jupiter.api.Test
+    @DisplayName("sorting successful")
     void bubbleSort() {
         int nums[];
         nums = t.blank_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting blank_list failed");
 
         nums = t.one_number_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting one_number_list failed");
 
         nums = t.two_number_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting two_numbers_list failed");
 
         nums = t.ranom_sized_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting random_sized_list failed");
 
         nums = t.random_numbers_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting random_numbers_list failed");
 
         nums = t.sorted_ascendingly();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting sorted_list failed");
 
         nums = t.sorted_descendingly();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting descendingly_sorted_list failed");
 
         nums = t.equal_number_list();
-        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting successful");
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting equal_number_list failed");
+
+        nums = t.negative_numbers_list();
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting equal_number_list failed");
+
+        nums = t.pos_neg_list();
+        assertTrue(is_sorted(b.sort(nums)) && is_freq_same(b.sort(nums) , nums), "Sorting equal_number_list failed");
 
     }
 }
